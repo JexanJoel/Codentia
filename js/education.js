@@ -73,13 +73,13 @@ initializeTheme();
 const courses = [
     {
         id: 1,
-        title: 'Organic Farming Basics',
+        title: 'Agricultural Practices: Preparation of Soil',
         category: 'organic',
         duration: '45 min',
         level: 'Beginner',
         description: 'Learn the fundamentals of organic farming, including soil preparation, natural fertilizers, and pest control.',
         videoId: '8ulpy_GFLDk', // YouTube video ID
-        thumbnail: 'https://img.youtube.com/vi/8ulpy_GFLDk/maxresdefault.jpg',
+        thumbnail: 'https://i.ytimg.com/vi/8ulpy_GFLDk/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDJsFl5q-SeqjVy3l0IOCcsrqTMww',
         completed: false
     },
     {
@@ -89,8 +89,8 @@ const courses = [
         duration: '30 min',
         level: 'Intermediate',
         description: 'Complete guide to setting up and maintaining drip irrigation systems for efficient water usage.',
-        videoId: '8ulpy_GFLDk',
-        thumbnail: 'https://img.youtube.com/vi/8ulpy_GFLDk/maxresdefault.jpg',
+        videoId: 'Xej22GsLLQA',
+        thumbnail: 'https://i.ytimg.com/vi/Xej22GsLLQA/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCjXi98Nx1AyDvt-QsMjTyW5LLvAw',
         completed: true
     },
     {
@@ -100,8 +100,8 @@ const courses = [
         duration: '60 min',
         level: 'Intermediate',
         description: 'Learn proper dairy cow care, feeding schedules, milking techniques, and health management.',
-        videoId: '8ulpy_GFLDk',
-        thumbnail: 'https://img.youtube.com/vi/8ulpy_GFLDk/maxresdefault.jpg',
+        videoId: 'eLKScfjYhac',
+        thumbnail: 'https://i.ytimg.com/vi/eLKScfjYhac/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCnwbCP_5BI_6TCgGBYFQzXgW4_uA',
         completed: false
     },
     {
@@ -111,8 +111,8 @@ const courses = [
         duration: '25 min',
         level: 'Beginner',
         description: 'Master the art of composting organic waste to create nutrient-rich fertilizer for your crops.',
-        videoId: '8ulpy_GFLDk',
-        thumbnail: 'https://img.youtube.com/vi/8ulpy_GFLDk/maxresdefault.jpg',
+        videoId: 'eO4HdrIXnVU',
+        thumbnail: 'https://i.ytimg.com/vi/eO4HdrIXnVU/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD6Awd5vvk3ls8xylCEphceQgLlVw',
         completed: true
     },
     {
@@ -122,8 +122,8 @@ const courses = [
         duration: '40 min',
         level: 'Advanced',
         description: 'Advanced techniques for planning irrigation schedules based on crop needs and weather patterns.',
-        videoId: '8ulpy_GFLDk',
-        thumbnail: 'https://img.youtube.com/vi/8ulpy_GFLDk/maxresdefault.jpg',
+        videoId: 'Ulf8E1XnhgI',
+        thumbnail: 'https://i.ytimg.com/vi/Ulf8E1XnhgI/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD2qr2cTdlaurwXMMt8DR04ZmmyAQ',
         completed: false
     },
     {
@@ -133,8 +133,8 @@ const courses = [
         duration: '35 min',
         level: 'Beginner',
         description: 'Introduction to poultry farming, including housing, feeding, and disease prevention.',
-        videoId: '8ulpy_GFLDk',
-        thumbnail: 'https://img.youtube.com/vi/8ulpy_GFLDk/maxresdefault.jpg',
+        videoId: 'jscHbXWSiqA',
+        thumbnail: 'https://i.ytimg.com/vi/jscHbXWSiqA/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAhoW-smvMsEUIOeEbb7FAIPTnIoA',
         completed: false
     },
     {
@@ -144,8 +144,8 @@ const courses = [
         duration: '50 min',
         level: 'Intermediate',
         description: 'Effective organic methods for controlling pests without harmful chemicals.',
-        videoId: '8ulpy_GFLDk',
-        thumbnail: 'https://img.youtube.com/vi/8ulpy_GFLDk/maxresdefault.jpg',
+        videoId: '-NYVacngcXw',
+        thumbnail: 'https://i.ytimg.com/vi/-NYVacngcXw/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBOKKRTiZuuaMRVJLSbHOTmjbuOKw',
         completed: true
     },
     {
@@ -155,19 +155,19 @@ const courses = [
         duration: '55 min',
         level: 'Intermediate',
         description: 'Learn various water conservation techniques to maximize efficiency and reduce waste.',
-        videoId: '8ulpy_GFLDk',
-        thumbnail: 'https://img.youtube.com/vi/8ulpy_GFLDk/maxresdefault.jpg',
+        videoId: 'nTcFXJT0Fsc',
+        thumbnail: 'https://i.ytimg.com/vi/nTcFXJT0Fsc/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA28Cm2IXkRIBiRZNKz-ulMNdy_7w',
         completed: false
     },
     {
         id: 9,
-        title: 'Goat Farming Guide',
-        category: 'livestock',
+        title: 'Rice Farming Guide',
+        category: 'seeds',
         duration: '45 min',
         level: 'Beginner',
         description: 'Complete guide to goat farming, including breeding, feeding, and healthcare.',
-        videoId: '8ulpy_GFLDk',
-        thumbnail: 'https://img.youtube.com/vi/8ulpy_GFLDk/maxresdefault.jpg',
+        videoId: '4dxzlspJ1eg',
+        thumbnail: 'https://i.ytimg.com/vi/4dxzlspJ1eg/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCDjMSxVeQQ9ZXNVX9A4hYiAxmIxQ',
         completed: false
     }
 ];

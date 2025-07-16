@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,36 +12,93 @@
             theme: {
                 extend: {
                     colors: {
-                        'forest-green': '#2d5016',
-                        'leaf-green': '#4a7c59',
-                        'sage-green': '#87a96b',
-                        'mint-green': '#c8d5b9',
-                        'light-green': '#f1f8e9',
+                        'forest-green': '#1a5d1a',
+                        'leaf-green': '#2d8f2d',
+                        'sage-green': '#4caf50',
+                        'mint-green': '#81c784',
+                        'light-green': '#c8e6c9',
+                        'nature-green': '#388e3c',
+                        'vibrant-green': '#4caf50',
+                        'emerald': '#00c853',
                     }
                 }
-            }
+            },
+            darkMode: 'class'
         }
     </script>
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #c8e6c9, #81c784, #4caf50, #2d8f2d);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-light-green to-white">
+
+<body class="animated-gradient min-h-screen dark:bg-gray-900">
     <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3">
+    <header
+        class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b-4 border-vibrant-green">
+        <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-3">
-                    <a href="dashboard.html" class="text-forest-green hover:text-leaf-green transition-colors">
-                        <i class="fas fa-arrow-left text-xl"></i>
+                    <a href="dashboard.html"
+                        class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors">
+                        <i class="fas fa-arrow-left text-2xl"></i>
                     </a>
-                    <div class="w-10 h-10 bg-forest-green rounded-full flex items-center justify-center">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-forest-green to-vibrant-green rounded-full flex items-center justify-center">
                         <i class="fas fa-seedling text-white text-xl"></i>
                     </div>
-                    <h1 class="text-2xl font-bold text-forest-green">Market Prices</h1>
+                    <h1
+                        class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent">
+                        Market Prices</h1>
                 </div>
-                
                 <div class="flex items-center space-x-4">
-                    <button onclick="refreshPrices()" class="text-forest-green hover:text-leaf-green transition-colors">
-                        <i class="fas fa-sync-alt text-xl"></i>
+                    <button onclick="refreshPrices()"
+                        class="bg-gradient-to-r from-forest-green to-nature-green text-white px-4 py-3 rounded-full hover:from-nature-green hover:to-emerald transition-all shadow-lg">
+                        <i class="fas fa-sync-alt"></i>
                     </button>
+
+                    <!-- Theme Toggle -->
+                    <div class="relative">
+                        <button id="themeToggle"
+                            class="bg-gradient-to-r from-sage-green to-vibrant-green text-white p-3 rounded-full hover:from-vibrant-green hover:to-emerald transition-all shadow-lg">
+                            <i class="fas fa-sun text-lg" id="themeIcon"></i>
+                        </button>
+                        <div id="themeDropdown"
+                            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 hidden z-50">
+                            <button onclick="setTheme('light')"
+                                class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-t-xl flex items-center space-x-3">
+                                <i class="fas fa-sun text-yellow-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Light Mode</span>
+                            </button>
+                            <button onclick="setTheme('dark')"
+                                class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 flex items-center space-x-3">
+                                <i class="fas fa-moon text-blue-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Dark Mode</span>
+                            </button>
+                            <button onclick="setTheme('system')"
+                                class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-b-xl flex items-center space-x-3">
+                                <i class="fas fa-desktop text-gray-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">System</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,48 +107,49 @@
     <!-- Main Content -->
     <div class="container mx-auto px-4 py-8">
         <!-- Market Overview -->
-        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-8 border border-white/30">
+        <div
+            class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-8 border border-white/30">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-forest-green">Today's Market Prices</h2>
-                <span class="text-sm text-gray-600">Last updated: <span id="lastUpdated">5 minutes ago</span></span>
+                <h2
+                    class="text-2xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent">
+                    Today's Market Prices</h2>
+                <span class="text-sm text-gray-600 dark:text-gray-300">Last updated: <span id="lastUpdated">5 minutes
+                        ago</span></span>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-green-50 rounded-lg p-4">
+                <div class="bg-green-100 dark:bg-green-900 rounded-xl p-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm text-gray-600">Market Status</p>
-                            <p class="text-lg font-semibold text-green-600">Open</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Market Status</p>
+                            <p class="text-lg font-semibold text-green-700 dark:text-green-300">Open</p>
                         </div>
                         <i class="fas fa-circle text-green-500"></i>
                     </div>
                 </div>
-                
-                <div class="bg-blue-50 rounded-lg p-4">
+                <div class="bg-blue-100 dark:bg-blue-900 rounded-xl p-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm text-gray-600">Active Mandis</p>
-                            <p class="text-lg font-semibold text-blue-600">24</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Active Mandis</p>
+                            <p class="text-lg font-semibold text-blue-700 dark:text-blue-300">24</p>
                         </div>
                         <i class="fas fa-store text-blue-500"></i>
                     </div>
                 </div>
-                
-                <div class="bg-purple-50 rounded-lg p-4">
+                <div class="bg-purple-100 dark:bg-purple-900 rounded-xl p-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm text-gray-600">Trending Up</p>
-                            <p class="text-lg font-semibold text-purple-600">Rice, Wheat</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Trending Up</p>
+                            <p class="text-lg font-semibold text-purple-700 dark:text-purple-300">Rice, Wheat</p>
                         </div>
                         <i class="fas fa-arrow-up text-purple-500"></i>
                     </div>
                 </div>
-                
-                <div class="bg-orange-50 rounded-lg p-4">
+                <div class="bg-orange-100 dark:bg-orange-900 rounded-xl p-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm text-gray-600">Best Market</p>
-                            <p class="text-lg font-semibold text-orange-600">Central Mandi</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Best Market</p>
+                            <p class="text-lg font-semibold text-orange-700 dark:text-orange-300">Central Mandi</p>
                         </div>
                         <i class="fas fa-star text-orange-500"></i>
                     </div>
@@ -99,18 +158,23 @@
         </div>
 
         <!-- Price List -->
-        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <h3 class="text-xl font-bold text-forest-green mb-6">Crop Prices (per kg)</h3>
-            
+        <div
+            class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-6 mb-8 border border-white/30">
+            <h3
+                class="text-xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                Crop Prices (per kg)</h3>
             <div class="overflow-x-auto">
                 <table class="w-full" id="priceTable">
                     <thead>
-                        <tr class="bg-light-green">
-                            <th class="text-left p-4 font-semibold text-forest-green">Crop</th>
-                            <th class="text-left p-4 font-semibold text-forest-green">Current Price</th>
-                            <th class="text-left p-4 font-semibold text-forest-green">Previous Price</th>
-                            <th class="text-left p-4 font-semibold text-forest-green">Change</th>
-                            <th class="text-left p-4 font-semibold text-forest-green">Best Market</th>
+                        <tr class="bg-light-green dark:bg-gray-700">
+                            <th class="text-left p-4 font-semibold text-forest-green dark:text-mint-green">Crop</th>
+                            <th class="text-left p-4 font-semibold text-forest-green dark:text-mint-green">Current Price
+                            </th>
+                            <th class="text-left p-4 font-semibold text-forest-green dark:text-mint-green">Previous
+                                Price</th>
+                            <th class="text-left p-4 font-semibold text-forest-green dark:text-mint-green">Change</th>
+                            <th class="text-left p-4 font-semibold text-forest-green dark:text-mint-green">Best Market
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="priceTableBody">
@@ -120,63 +184,100 @@
             </div>
         </div>
 
-        <!-- Market Locations -->
+        <!-- Market Locations & Alerts -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-forest-green mb-6">Nearby Markets</h3>
-                <div class="space-y-4">
+            <div
+                class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-6 border border-white/30">
+                <h3
+                    class="text-xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                    Nearby Markets</h3>
+                <div class="space-y-4 text-gray-700 dark:text-gray-300">
                     <div class="border-l-4 border-forest-green pl-4">
-                        <h4 class="font-semibold text-forest-green">Central Mandi</h4>
-                        <p class="text-gray-600 text-sm">15 km away • Open 6 AM - 8 PM</p>
-                        <p class="text-green-600 text-sm">Best prices for Rice, Wheat</p>
+                        <h4 class="font-semibold">Central Mandi</h4>
+                        <p class="text-sm">15 km away • Open 6 AM - 8 PM</p>
+                        <p class="text-green-600 dark:text-green-400 text-sm">Best prices for Rice, Wheat</p>
                     </div>
-                    
                     <div class="border-l-4 border-sage-green pl-4">
-                        <h4 class="font-semibold text-forest-green">Farmers Market</h4>
-                        <p class="text-gray-600 text-sm">8 km away • Open 5 AM - 7 PM</p>
-                        <p class="text-green-600 text-sm">Best prices for Vegetables</p>
+                        <h4 class="font-semibold">Farmers Market</h4>
+                        <p class="text-sm">8 km away • Open 5 AM - 7 PM</p>
+                        <p class="text-green-600 dark:text-green-400 text-sm">Best prices for Vegetables</p>
                     </div>
-                    
                     <div class="border-l-4 border-mint-green pl-4">
-                        <h4 class="font-semibold text-forest-green">Wholesale Market</h4>
-                        <p class="text-gray-600 text-sm">25 km away • Open 4 AM - 6 PM</p>
-                        <p class="text-green-600 text-sm">Best prices for Bulk sales</p>
+                        <h4 class="font-semibold">Wholesale Market</h4>
+                        <p class="text-sm">25 km away • Open 4 AM - 6 PM</p>
+                        <p class="text-green-600 dark:text-green-400 text-sm">Best prices for Bulk sales</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-forest-green mb-6">Price Alerts</h3>
+            <div
+                class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-6 border border-white/30">
+                <h3
+                    class="text-xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                    Price Alerts</h3>
                 <div class="space-y-4">
-                    <div class="bg-green-50 rounded-lg p-4">
+                    <div class="bg-green-50 dark:bg-green-900 rounded-xl p-4">
                         <div class="flex items-center space-x-3">
-                            <i class="fas fa-bell text-green-600"></i>
+                            <i class="fas fa-bell text-green-600 dark:text-green-300"></i>
                             <div>
-                                <p class="font-semibold text-green-800">Rice prices up 5%</p>
-                                <p class="text-green-600 text-sm">Good time to sell your rice stock</p>
+                                <p class="font-semibold text-green-800 dark:text-green-200">Rice prices up 5%</p>
+                                <p class="text-green-600 dark:text-green-400 text-sm">Good time to sell your rice stock
+                                </p>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="bg-blue-50 rounded-lg p-4">
+                    <div class="bg-blue-50 dark:bg-blue-900 rounded-xl p-4">
                         <div class="flex items-center space-x-3">
-                            <i class="fas fa-info-circle text-blue-600"></i>
+                            <i class="fas fa-info-circle text-blue-600 dark:text-blue-300"></i>
                             <div>
-                                <p class="font-semibold text-blue-800">Tomato demand high</p>
-                                <p class="text-blue-600 text-sm">Central Mandi looking for tomatoes</p>
+                                <p class="font-semibold text-blue-800 dark:text-blue-200">Tomato demand high</p>
+                                <p class="text-blue-600 dark:text-blue-400 text-sm">Central Mandi looking for tomatoes
+                                </p>
                             </div>
                         </div>
                     </div>
-                    
-                    <button class="w-full bg-forest-green text-white py-3 rounded-lg hover:bg-leaf-green transition-colors">
-                        <i class="fas fa-plus mr-2"></i>
-                        Set Price Alert
+                    <button
+                        class="w-full bg-gradient-to-r from-forest-green to-nature-green text-white py-3 rounded-xl hover:from-nature-green hover:to-emerald transition-all shadow-lg">
+                        <i class="fas fa-plus mr-2"></i> Set Price Alert
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        const themeToggle = document.getElementById("themeToggle");
+        const themeDropdown = document.getElementById("themeDropdown");
+        const themeIcon = document.getElementById("themeIcon");
+
+        themeToggle.addEventListener("click", () => {
+            themeDropdown.classList.toggle("hidden");
+        });
+
+        function setTheme(theme) {
+            const html = document.documentElement;
+            localStorage.setItem("theme", theme);
+            if (theme === "dark") {
+                html.classList.add("dark");
+                themeIcon.className = "fas fa-moon";
+            } else if (theme === "light") {
+                html.classList.remove("dark");
+                themeIcon.className = "fas fa-sun";
+            } else {
+                const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                html.classList.toggle("dark", systemPrefersDark);
+                themeIcon.className = systemPrefersDark ? "fas fa-moon" : "fas fa-sun";
+            }
+            themeDropdown.classList.add("hidden");
+        }
+
+        // On load, set theme
+        (function () {
+            const savedTheme = localStorage.getItem("theme") || "system";
+            setTheme(savedTheme);
+        })();
+    </script>
+
     <script src="js/market-prices.js"></script>
 </body>
+
 </html>
