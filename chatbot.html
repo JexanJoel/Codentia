@@ -66,10 +66,31 @@
                     CropKind AI</h1>
             </div>
             <div class="flex items-center space-x-4">
-                <button id="themeToggle"
-                    class="text-gray-600 dark:text-gray-300 hover:text-forest-green dark:hover:text-mint-green transition-colors">
-                    <i class="fas fa-moon text-lg"></i>
-                </button>
+                <!-- Theme Toggle -->
+                <div class="relative">
+                    <button id="themeToggle"
+                        class="bg-gradient-to-r from-sage-green to-vibrant-green text-white p-3 rounded-full hover:from-vibrant-green hover:to-emerald transition-all duration-300 shadow-lg">
+                        <i class="fas fa-sun text-lg" id="themeIcon"></i>
+                    </button>
+                    <div id="themeDropdown"
+                        class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 hidden z-50">
+                        <button onclick="setTheme('light')"
+                            class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-t-xl flex items-center space-x-3">
+                            <i class="fas fa-sun text-yellow-500"></i>
+                            <span class="text-gray-700 dark:text-gray-300">Light Mode</span>
+                        </button>
+                        <button onclick="setTheme('dark')"
+                            class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 flex items-center space-x-3">
+                            <i class="fas fa-moon text-blue-500"></i>
+                            <span class="text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </button>
+                        <button onclick="setTheme('system')"
+                            class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-b-xl flex items-center space-x-3">
+                            <i class="fas fa-desktop text-gray-500"></i>
+                            <span class="text-gray-700 dark:text-gray-300">System</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
