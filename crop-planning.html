@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Planning - CropKind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forest-green': '#1a5d1a',
+                        'leaf-green': '#2d8f2d',
+                        'sage-green': '#4caf50',
+                        'mint-green': '#81c784',
+                        'light-green': '#c8e6c9',
+                        'nature-green': '#388e3c',
+                        'vibrant-green': '#4caf50',
+                        'emerald': '#00c853',
+                    },
+                },
+            },
+            darkMode: 'class',
+        };
+    </script>
+
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #c8e6c9, #81c784, #4caf50, #2d8f2d);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+    
+</head>
+
+<body class="animated-gradient min-h-screen dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+
+    <!-- Header -->
+    <header
+        class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b-4 border-vibrant-green">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="dashboard.html"
+                        class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors">
+                        <i class="fas fa-arrow-left text-2xl"></i>
+                    </a>
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-forest-green to-vibrant-green rounded-full flex items-center justify-center">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <h1
+                        class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent">
+                        Crop Planning</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="savePlan()"
+                        class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors">
+                        <i class="fas fa-save text-2xl"></i>
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <div class="relative">
+                        <button id="themeToggle"
+                            class="bg-gradient-to-r from-sage-green to-vibrant-green text-white p-3 rounded-full hover:from-vibrant-green hover:to-emerald transition-all duration-300 shadow-lg">
+                            <i class="fas fa-sun text-lg" id="themeIcon"></i>
+                        </button>
+                        <div id="themeDropdown"
+                            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 hidden z-50">
+                            <button onclick="setTheme('light')"
+                                class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-t-xl flex items-center space-x-3">
+                                <i class="fas fa-sun text-yellow-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Light Mode</span>
+                            </button>
+                            <button onclick="setTheme('dark')"
+                                class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 flex items-center space-x-3">
+                                <i class="fas fa-moon text-blue-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Dark Mode</span>
+                            </button>
+                            <button onclick="setTheme('system')"
+                                class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-b-xl flex items-center space-x-3">
+                                <i class="fas fa-desktop text-gray-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">System</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-10 max-w-6xl">
+        <!-- Planning Form -->
+        <div
+            class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-10 border border-white/30">
+            <h2
+                class="text-2xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                Get Personalized Crop Recommendations</h2>
+
+            <form id="planningForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Input fields -->
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2 font-semibold">Location</label>
+                    <input type="text" id="location"
+                        class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white"
+                        placeholder="Enter your location" />
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2 font-semibold">Farm Size (acres)</label>
+                    <input type="number" id="farmSize"
+                        class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white"
+                        placeholder="Enter farm size" />
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2 font-semibold">Soil Type</label>
+                    <select id="soilType"
+                        class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white">
+                        <option value="">Select soil type</option>
+                        <option value="clay">Clay</option>
+                        <option value="sandy">Sandy</option>
+                        <option value="loamy">Loamy</option>
+                        <option value="silty">Silty</option>
+                        <option value="peaty">Peaty</option>
+                        <option value="chalky">Chalky</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2 font-semibold">Budget (₹)</label>
+                    <input type="number" id="budget"
+                        class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white"
+                        placeholder="Enter available budget" />
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2 font-semibold">Season</label>
+                    <select id="season"
+                        class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white">
+                        <option value="">Select season</option>
+                        <option value="kharif">Kharif (Monsoon)</option>
+                        <option value="rabi">Rabi (Winter)</option>
+                        <option value="zaid">Zaid (Summer)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2 font-semibold">Water Availability</label>
+                    <select id="waterAvailability"
+                        class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white">
+                        <option value="">Select water availability</option>
+                        <option value="abundant">Abundant</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="limited">Limited</option>
+                        <option value="rainfed">Rain-fed only</option>
+                    </select>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2 font-semibold">Additional
+                        Preferences</label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <label class="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                            <input type="checkbox" id="organic"
+                                class="rounded text-vibrant-green focus:ring-vibrant-green" />
+                            <span>Organic farming</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                            <input type="checkbox" id="highYield"
+                                class="rounded text-vibrant-green focus:ring-vibrant-green" />
+                            <span>High yield varieties</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                            <input type="checkbox" id="drought"
+                                class="rounded text-vibrant-green focus:ring-vibrant-green" />
+                            <span>Drought resistant</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                            <input type="checkbox" id="pestResistant"
+                                class="rounded text-vibrant-green focus:ring-vibrant-green" />
+                            <span>Pest resistant</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2">
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-forest-green to-nature-green text-white py-4 rounded-xl hover:from-nature-green hover:to-emerald transition-all duration-300 shadow-lg font-semibold">
+                        <i class="fas fa-search mr-2"></i>Get Recommendations
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Recommendations -->
+        <div id="recommendations" class="hidden">
+            <div
+                class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-10 border border-white/30">
+                <h2
+                    class="text-2xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                    Crop Recommendations</h2>
+                <div id="recommendedCrops" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Recommendations will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Planting Calendar -->
+        <div id="plantingCalendar"
+            class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-10 hidden border border-white/30">
+            <h2
+                class="text-2xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                Planting Calendar</h2>
+            <div id="calendarContent">
+                <!-- Calendar will be populated here -->
+            </div>
+        </div>
+
+        <!-- Farming Tips -->
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/30">
+            <h2
+                class="text-2xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                General Farming Tips</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700 dark:text-gray-300">
+                <!-- All tips unchanged in structure -->
+                <!-- Farming Tips -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-light-green rounded-lg p-6">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fas fa-tint text-blue-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-forest-green">Water Management</h3>
+                            </div>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>• Use drip irrigation for water efficiency</li>
+                                <li>• Water early morning or late evening</li>
+                                <li>• Mulch around plants to retain moisture</li>
+                                <li>• Check soil moisture before watering</li>
+                            </ul>
+                        </div>
+                
+                        <div class="bg-light-green rounded-lg p-6">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fas fa-seedling text-green-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-forest-green">Soil Health</h3>
+                            </div>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>• Test soil pH regularly</li>
+                                <li>• Add organic matter like compost</li>
+                                <li>• Practice crop rotation</li>
+                                <li>• Use cover crops in off-season</li>
+                            </ul>
+                        </div>
+                
+                        <div class="bg-light-green rounded-lg p-6">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fas fa-bug text-red-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-forest-green">Pest Management</h3>
+                            </div>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>• Monitor crops regularly for pests</li>
+                                <li>• Use integrated pest management</li>
+                                <li>• Encourage beneficial insects</li>
+                                <li>• Practice crop rotation to break pest cycles</li>
+                            </ul>
+                        </div>
+                
+                        <div class="bg-light-green rounded-lg p-6">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <i class="fas fa-chart-line text-purple-500 text-2xl"></i>
+                                <h3 class="text-lg font-semibold text-forest-green">Yield Optimization</h3>
+                            </div>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>• Use quality seeds from reliable sources</li>
+                                <li>• Follow proper spacing guidelines</li>
+                                <li>• Apply fertilizers at right time</li>
+                                <li>• Harvest at optimal maturity</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-forest-green to-nature-green text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                            <i class="fas fa-seedling text-forest-green text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">CropKind</h3>
+                    </div>
+                    <p class="text-mint-green">Empowering farmers with AI-powered agricultural solutions.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Features</h4>
+                    <ul class="space-y-3 text-mint-green">
+                        <li>AI Chatbot</li>
+                        <li>Crop Diagnosis</li>
+                        <li>Weather Forecast</li>
+                        <li>Market Prices</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Support</h4>
+                    <ul class="space-y-3 text-mint-green">
+                        <li>Help Center</li>
+                        <li>Community Forum</li>
+                        <li>Emergency Helpline</li>
+                        <li>Government Schemes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-leaf-green mt-12 pt-8 text-center text-mint-green">
+                <p>&copy; 2024 CropKind. All rights reserved. Empowering farmers worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const themeIcon = document.getElementById('themeIcon');
+
+        function updateThemeIcon(mode) {
+            if (mode === 'dark') {
+                themeIcon.className = 'fas fa-moon text-lg';
+            } else if (mode === 'light') {
+                themeIcon.className = 'fas fa-sun text-lg';
+            } else {
+                themeIcon.className = 'fas fa-desktop text-lg';
+            }
+        }
+
+        function setTheme(mode) {
+            localStorage.setItem('theme', mode);
+            if (mode === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else if (mode === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.classList.toggle('dark', prefersDark);
+            }
+            updateThemeIcon(mode);
+            themeDropdown.classList.add('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            themeDropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                themeDropdown.classList.add('hidden');
+            }
+        });
+
+        // Init theme
+        const savedTheme = localStorage.getItem('theme') || 'system';
+        setTheme(savedTheme);
+    </script>
+
+    <script src="js/crop-planning.js"></script>
+</body>
+
+</html>

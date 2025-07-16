@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - CropKind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forest-green': '#1a5d1a',
+                        'leaf-green': '#2d8f2d',
+                        'sage-green': '#4caf50',
+                        'mint-green': '#81c784',
+                        'light-green': '#c8e6c9',
+                        'nature-green': '#388e3c',
+                        'vibrant-green': '#4caf50',
+                        'emerald': '#00c853',
+                    }
+                }
+            },
+            darkMode: 'class'
+        }
+    </script>
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #c8e6c9, #81c784, #4caf50, #2d8f2d);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .pulse-green {
+            animation: pulseGreen 2s infinite;
+        }
+        @keyframes pulseGreen {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+        }
+    </style>
+</head>
+<body class="animated-gradient min-h-screen dark:bg-gray-900">
+    <!-- Header -->
+    <header class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b-4 border-vibrant-green">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="dashboard.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors">
+                        <i class="fas fa-arrow-left text-2xl"></i>
+                    </a>
+                    <div class="w-12 h-12 bg-gradient-to-br from-forest-green to-vibrant-green rounded-full flex items-center justify-center pulse-green">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent">Marketplace</h1>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-forest-green dark:text-mint-green text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6">
+                    <a href="chatbot.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">AI Chatbot</a>
+                    <a href="crop-diagnosis.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Crop Diagnosis</a>
+                    <a href="market-prices.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Market Prices</a>
+                    <a href="weather.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Weather</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <div class="relative">
+                        <button id="themeToggle" class="bg-gradient-to-r from-sage-green to-vibrant-green text-white p-3 rounded-full hover:from-vibrant-green hover:to-emerald transition-all duration-300 shadow-lg">
+                            <i class="fas fa-sun text-lg" id="themeIcon"></i>
+                        </button>
+                        <div id="themeDropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 hidden z-50">
+                            <button onclick="setTheme('light')" class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-t-xl flex items-center space-x-3">
+                                <i class="fas fa-sun text-yellow-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Light Mode</span>
+                            </button>
+                            <button onclick="setTheme('dark')" class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 flex items-center space-x-3">
+                                <i class="fas fa-moon text-blue-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Dark Mode</span>
+                            </button>
+                            <button onclick="setTheme('system')" class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-b-xl flex items-center space-x-3">
+                                <i class="fas fa-desktop text-gray-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">System</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Navigation -->
+                <div id="mobile-menu" class="md:hidden hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md shadow-lg border-t border-mint-green/30">
+                    <nav class="flex flex-col p-4 space-y-4">
+                        <a href="chatbot.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">AI Chatbot</a>
+                        <a href="crop-diagnosis.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Crop Diagnosis</a>
+                        <a href="market-prices.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Market Prices</a>
+                        <a href="weather.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Weather</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Search and Filters -->
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-8 border border-white/30">
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">Find Agricultural Products</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-3 font-semibold">Search Products</label>
+                    <input type="text" id="searchInput" class="w-full px-4 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white transition-colors" placeholder="Search seeds, tools, fertilizers...">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-3 font-semibold">Category</label>
+                    <select id="categoryFilter" class="w-full px-4 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white transition-colors">
+                        <option value="">All Categories</option>
+                        <option value="seeds">Seeds</option>
+                        <option value="tools">Tools & Equipment</option>
+                        <option value="fertilizers">Fertilizers</option>
+                        <option value="pesticides">Pesticides</option>
+                        <option value="irrigation">Irrigation</option>
+                        <option value="livestock">Livestock</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-3 font-semibold">Location</label>
+                    <input type="text" id="locationFilter" class="w-full px-4 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white transition-colors" placeholder="Enter your location">
+                </div>
+                
+                <div class="flex items-end">
+                    <button onclick="searchProducts()" class="w-full bg-gradient-to-r from-forest-green to-nature-green text-white px-8 py-4 rounded-xl hover:from-nature-green hover:to-emerald transition-all duration-300 shadow-lg font-semibold">
+                        <i class="fas fa-search mr-2"></i>Search
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Listings -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="productGrid">
+            <!-- Products will be populated here -->
+        </div>
+
+        <!-- Sell Your Products Section -->
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mt-12 border border-white/30">
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">Sell Your Products</h2>
+            
+            <form id="sellProductForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-3 font-semibold">Product Name</label>
+                    <input type="text" id="productName" class="w-full px-4 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white transition-colors" placeholder="Enter product name">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-3 font-semibold">Category</label>
+                    <select id="productCategory" class="w-full px-4 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white transition-colors">
+                        <option value="">Select category</option>
+                        <option value="seeds">Seeds</option>
+                        <option value="tools">Tools & Equipment</option>
+                        <option value="fertilizers">Fertilizers</option>
+                        <option value="pesticides">Pesticides</option>
+                        <option value="irrigation">Irrigation</option>
+                        <option value="livestock">Livestock</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-3 font-semibold">Price (₹)</label>
+                    <input type="number" id="productPrice" class="w-full px-4 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white transition-colors" placeholder="Enter price">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-3 font-semibold">Quantity Available</label>
+                    <input type="text" id="productQuantity" class="w-full px-4 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white transition-colors" placeholder="e.g., 50 kg, 10 pieces">
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 dark:text-gray-300 mb-3 font-semibold">Description</label>
+                    <textarea id="productDescription" rows="4" class="w-full px-4 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white transition-colors" placeholder="Describe your product..."></textarea>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 dark:text-gray-300 mb-3 font-semibold">Contact Information</label>
+                    <input type="text" id="contactInfo" class="w-full px-4 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white transition-colors" placeholder="Phone number or WhatsApp">
+                </div>
+                
+                <div class="md:col-span-2">
+                    <button type="submit" class="bg-gradient-to-r from-forest-green to-nature-green text-white px-8 py-4 rounded-xl hover:from-nature-green hover:to-emerald transition-all duration-300 shadow-lg font-semibold">
+                        <i class="fas fa-plus mr-2"></i>List Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-forest-green to-nature-green text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                            <i class="fas fa-seedling text-forest-green text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">CropKind</h3>
+                    </div>
+                    <p class="text-mint-green">Empowering farmers with AI-powered agricultural solutions.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Features</h4>
+                    <ul class="space-y-3 text-mint-green">
+                        <li>AI Chatbot</li>
+                        <li>Crop Diagnosis</li>
+                        <li>Weather Forecast</li>
+                        <li>Market Prices</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Support</h4>
+                    <ul class="space-y-3 text-mint-green">
+                        <li>Help Center</li>
+                        <li>Community Forum</li>
+                        <li>Emergency Helpline</li>
+                        <li>Government Schemes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-leaf-green mt-12 pt-8 text-center text-mint-green">
+                <p>&copy; 2024 CropKind. All rights reserved. Empowering farmers worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/marketplace.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education - CropKind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forest-green': '#1a5d1a',
+                        'leaf-green': '#2d8f2d',
+                        'sage-green': '#4caf50',
+                        'mint-green': '#81c784',
+                        'light-green': '#c8e6c9',
+                        'nature-green': '#388e3c',
+                        'vibrant-green': '#4caf50',
+                        'emerald': '#00c853',
+                    }
+                }
+            },
+            darkMode: 'class'
+        }
+    </script>
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #c8e6c9, #81c784, #4caf50, #2d8f2d);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .pulse-green {
+            animation: pulseGreen 2s infinite;
+        }
+        @keyframes pulseGreen {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+        }
+    </style>
+</head>
+<body class="animated-gradient min-h-screen dark:bg-gray-900">
+    <!-- Header -->
+    <header class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b-4 border-vibrant-green">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="dashboard.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors">
+                        <i class="fas fa-arrow-left text-2xl"></i>
+                    </a>
+                    <div class="w-12 h-12 bg-gradient-to-br from-forest-green to-vibrant-green rounded-full flex items-center justify-center pulse-green">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent">Education</h1>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-forest-green dark:text-mint-green text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6">
+                    <a href="chatbot.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">AI Chatbot</a>
+                    <a href="crop-diagnosis.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Crop Diagnosis</a>
+                    <a href="market-prices.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Market Prices</a>
+                    <a href="weather.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Weather</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <div class="relative">
+                        <button id="themeToggle" class="bg-gradient-to-r from-sage-green to-vibrant-green text-white p-3 rounded-full hover:from-vibrant-green hover:to-emerald transition-all duration-300 shadow-lg">
+                            <i class="fas fa-sun text-lg" id="themeIcon"></i>
+                        </button>
+                        <div id="themeDropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 hidden z-50">
+                            <button onclick="setTheme('light')" class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-t-xl flex items-center space-x-3">
+                                <i class="fas fa-sun text-yellow-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Light Mode</span>
+                            </button>
+                            <button onclick="setTheme('dark')" class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 flex items-center space-x-3">
+                                <i class="fas fa-moon text-blue-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Dark Mode</span>
+                            </button>
+                            <button onclick="setTheme('system')" class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-b-xl flex items-center space-x-3">
+                                <i class="fas fa-desktop text-gray-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">System</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Navigation -->
+                <div id="mobile-menu" class="md:hidden hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md shadow-lg border-t border-mint-green/30">
+                    <nav class="flex flex-col p-4 space-y-4">
+                        <a href="chatbot.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">AI Chatbot</a>
+                        <a href="crop-diagnosis.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Crop Diagnosis</a>
+                        <a href="market-prices.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Market Prices</a>
+                        <a href="weather.html" class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors font-semibold">Weather</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Course Categories -->
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-8 border border-white/30">
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">Agricultural Education</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <button onclick="filterCourses('all')" class="category-btn active bg-gradient-to-r from-forest-green to-nature-green text-white px-6 py-3 rounded-xl hover:from-nature-green hover:to-emerald transition-all duration-300 shadow-lg font-semibold">
+                    All Courses
+                </button>
+                <button onclick="filterCourses('organic')" class="category-btn bg-white dark:bg-gray-700 text-forest-green dark:text-mint-green border-2 border-sage-green px-6 py-3 rounded-xl hover:bg-light-green dark:hover:bg-gray-600 transition-all duration-300 font-semibold">
+                    Organic Farming
+                </button>
+                <button onclick="filterCourses('irrigation')" class="category-btn bg-white dark:bg-gray-700 text-forest-green dark:text-mint-green border-2 border-sage-green px-6 py-3 rounded-xl hover:bg-light-green dark:hover:bg-gray-600 transition-all duration-300 font-semibold">
+                    Irrigation
+                </button>
+                <button onclick="filterCourses('livestock')" class="category-btn bg-white dark:bg-gray-700 text-forest-green dark:text-mint-green border-2 border-sage-green px-6 py-3 rounded-xl hover:bg-light-green dark:hover:bg-gray-600 transition-all duration-300 font-semibold">
+                    Livestock
+                </button>
+            </div>
+        </div>
+
+        <!-- Video Courses Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="coursesGrid">
+            <!-- Courses will be populated here -->
+        </div>
+
+        <!-- Progress Tracking -->
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mt-12 border border-white/30">
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">Your Learning Progress</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-32 h-32 mx-auto mb-4 relative">
+                        <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-gray-300" stroke="currentColor" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                            <path class="text-vibrant-green" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="65, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-3xl font-bold text-vibrant-green">65%</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-forest-green dark:text-mint-green">Courses Completed</h3>
+                    <p class="text-gray-600 dark:text-gray-400">13 out of 20 courses</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-32 h-32 mx-auto mb-4 relative">
+                        <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-gray-300" stroke="currentColor" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                            <path class="text-emerald" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="80, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-3xl font-bold text-emerald">80%</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-forest-green dark:text-mint-green">Quiz Scores</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Average score</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-32 h-32 mx-auto mb-4 relative">
+                        <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-gray-300" stroke="currentColor" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                            <path class="text-yellow-500" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="45, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-3xl font-bold text-yellow-500">3</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-semibold text-forest-green dark:text-mint-green">Certificates</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Earned certificates</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-forest-green to-nature-green text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                            <i class="fas fa-seedling text-forest-green text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">CropKind</h3>
+                    </div>
+                    <p class="text-mint-green">Empowering farmers with AI-powered agricultural solutions.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Features</h4>
+                    <ul class="space-y-3 text-mint-green">
+                        <li>AI Chatbot</li>
+                        <li>Crop Diagnosis</li>
+                        <li>Weather Forecast</li>
+                        <li>Market Prices</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Support</h4>
+                    <ul class="space-y-3 text-mint-green">
+                        <li>Help Center</li>
+                        <li>Community Forum</li>
+                        <li>Emergency Helpline</li>
+                        <li>Government Schemes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-leaf-green mt-12 pt-8 text-center text-mint-green">
+                <p>&copy; 2024 CropKind. All rights reserved. Empowering farmers worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/education.js"></script>
+</body>
+</html>

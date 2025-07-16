@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Diagnosis - CropKind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forest-green': '#1a5d1a',
+                        'leaf-green': '#2d8f2d',
+                        'sage-green': '#4caf50',
+                        'mint-green': '#81c784',
+                        'light-green': '#c8e6c9',
+                        'nature-green': '#388e3c',
+                        'vibrant-green': '#4caf50',
+                        'emerald': '#00c853',
+                    }
+                }
+            },
+            darkMode: 'class'
+        };
+    </script>
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #c8e6c9, #81c784, #4caf50, #2d8f2d);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body class="animated-gradient min-h-screen dark:bg-gray-900">
+
+    <!-- Header -->
+    <header
+        class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b-4 border-vibrant-green">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="dashboard.html"
+                        class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors">
+                        <i class="fas fa-arrow-left text-2xl"></i>
+                    </a>
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-forest-green to-vibrant-green rounded-full flex items-center justify-center">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <h1
+                        class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent">
+                        Crop Diagnosis</h1>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button onclick="showHistory()"
+                        class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors">
+                        <i class="fas fa-history text-xl"></i>
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <div class="relative">
+                        <button id="themeToggle"
+                            class="bg-gradient-to-r from-sage-green to-vibrant-green text-white p-3 rounded-full hover:from-vibrant-green hover:to-emerald transition-all duration-300 shadow-lg">
+                            <i class="fas fa-sun text-lg" id="themeIcon"></i>
+                        </button>
+                        <div id="themeDropdown"
+                            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 hidden z-50">
+                            <button onclick="setTheme('light')"
+                                class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-t-xl flex items-center space-x-3">
+                                <i class="fas fa-sun text-yellow-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Light Mode</span>
+                            </button>
+                            <button onclick="setTheme('dark')"
+                                class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 flex items-center space-x-3">
+                                <i class="fas fa-moon text-blue-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">Dark Mode</span>
+                            </button>
+                            <button onclick="setTheme('system')"
+                                class="w-full px-4 py-3 text-left hover:bg-light-green dark:hover:bg-gray-700 rounded-b-xl flex items-center space-x-3">
+                                <i class="fas fa-desktop text-gray-500"></i>
+                                <span class="text-gray-700 dark:text-gray-300">System</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Upload Section -->
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-8">
+            <h2
+                class="text-2xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6 text-center">
+                Upload Crop Image for Diagnosis</h2>
+            <div id="uploadArea"
+                class="border-2 border-dashed border-sage-green rounded-lg p-12 text-center hover:border-vibrant-green transition-colors cursor-pointer">
+                <i class="fas fa-camera text-sage-green text-6xl mb-4"></i>
+                <h3 class="text-xl font-semibold text-forest-green mb-2">Upload or Take Photo</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">Drag and drop an image or click to select</p>
+                <input type="file" id="fileInput" accept="image/*" class="hidden">
+                <button onclick="document.getElementById('fileInput').click()"
+                    class="bg-gradient-to-r from-forest-green to-nature-green text-white px-6 py-3 rounded-full hover:from-nature-green hover:to-emerald transition-all duration-300 shadow-lg">
+                    <i class="fas fa-upload mr-2"></i>Choose Image
+                </button>
+            </div>
+
+            <div id="imagePreview" class="mt-6 hidden">
+                <div class="relative inline-block">
+                    <img id="previewImg" class="max-w-full h-64 object-cover rounded-lg">
+                    <button onclick="removeImage()"
+                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <button onclick="analyzeImage()"
+                    class="mt-4 bg-gradient-to-r from-forest-green to-nature-green text-white px-8 py-3 rounded-xl hover:from-nature-green hover:to-emerald transition-all duration-300 shadow-lg">
+                    <i class="fas fa-search mr-2"></i>Analyze Image
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection"
+            class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 hidden">
+            <h2
+                class="text-2xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                Diagnosis Results</h2>
+            <div id="analysisResults">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-8">
+            <h2
+                class="text-2xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                Photography Tips</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-sage-green rounded-full flex items-center justify-center">
+                        <i class="fas fa-lightbulb text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-forest-green mb-2">Good Lighting</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Take photos in natural daylight for best results</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-sage-green rounded-full flex items-center justify-center">
+                        <i class="fas fa-eye text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-forest-green mb-2">Clear Focus</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Ensure the affected area is in sharp focus</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-sage-green rounded-full flex items-center justify-center">
+                        <i class="fas fa-expand-arrows-alt text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-forest-green mb-2">Close Distance</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Take photos from close distance showing affected
+                            leaves</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-sage-green rounded-full flex items-center justify-center">
+                        <i class="fas fa-images text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-forest-green mb-2">Multiple Angles</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Take photos from different angles for better
+                            diagnosis</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-forest-green to-nature-green text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                            <i class="fas fa-seedling text-forest-green text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">CropKind</h3>
+                    </div>
+                    <p class="text-mint-green">Empowering farmers with AI-powered agricultural solutions.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Features</h4>
+                    <ul class="space-y-3 text-mint-green">
+                        <li>AI Chatbot</li>
+                        <li>Crop Diagnosis</li>
+                        <li>Weather Forecast</li>
+                        <li>Market Prices</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Support</h4>
+                    <ul class="space-y-3 text-mint-green">
+                        <li>Help Center</li>
+                        <li>Community Forum</li>
+                        <li>Emergency Helpline</li>
+                        <li>Government Schemes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6 text-xl">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl"><i
+                                class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-mint-green hover:text-white transition-colors text-2xl"><i
+                                class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-leaf-green mt-12 pt-8 text-center text-mint-green">
+                <p>&copy; 2024 CropKind. All rights reserved. Empowering farmers worldwide.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById("themeToggle");
+        const themeDropdown = document.getElementById("themeDropdown");
+        const themeIcon = document.getElementById("themeIcon");
+
+        themeToggle?.addEventListener("click", () => {
+            themeDropdown?.classList.toggle("hidden");
+        });
+
+        function setTheme(mode) {
+            localStorage.setItem("theme", mode);
+            applyTheme();
+            themeDropdown?.classList.add("hidden");
+        }
+
+        function applyTheme() {
+            const theme = localStorage.getItem("theme");
+            if (theme === "dark") {
+                document.documentElement.classList.add("dark");
+                themeIcon?.classList.replace("fa-sun", "fa-moon");
+            } else if (theme === "light") {
+                document.documentElement.classList.remove("dark");
+                themeIcon?.classList.replace("fa-moon", "fa-sun");
+            } else {
+                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.classList.toggle("dark", prefersDark);
+                themeIcon?.classList.replace("fa-moon", prefersDark ? "fa-moon" : "fa-sun");
+            }
+        }
+
+        applyTheme();
+    </script>
+    <script src="js/crop-diagnosis.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - CropKind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forest-green': '#1a5d1a',
+                        'leaf-green': '#2d8f2d',
+                        'sage-green': '#4caf50',
+                        'mint-green': '#81c784',
+                        'light-green': '#c8e6c9',
+                        'nature-green': '#388e3c',
+                        'vibrant-green': '#4caf50',
+                        'emerald': '#00c853',
+                    }
+                }
+            },
+            darkMode: 'class'
+        }
+    </script>
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #c8e6c9, #81c784, #4caf50, #2d8f2d);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body class="animated-gradient min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto">
+            <!-- Back to Home -->
+            <div class="text-center mb-8">
+                <a href="index.html" class="inline-flex items-center text-white hover:text-yellow-200 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Home
+                </a>
+            </div>
+
+            <!-- Signup Card -->
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/30">
+                <div class="text-center mb-8">
+                    <div class="floating-animation">
+                        <div class="w-20 h-20 bg-gradient-to-br from-forest-green to-vibrant-green rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user-plus text-white text-3xl"></i>
+                        </div>
+                    </div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent">Join CropKind</h1>
+                    <p class="text-gray-600 mt-2">Create your farming assistant account</p>
+                </div>
+
+                <form id="signupForm">
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-3 font-semibold">Choose Signup Method</label>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <button type="button" onclick="selectSignupMethod('email')" class="flex items-center justify-center py-3 px-4 border-2 border-sage-green rounded-xl hover:bg-light-green transition-all duration-300 transform hover:scale-105" id="emailSignupBtn">
+                                <i class="fas fa-envelope mr-2 text-sage-green"></i>
+                                <span class="font-medium">Email</span>
+                            </button>
+                            <button type="button" onclick="selectSignupMethod('mobile')" class="flex items-center justify-center py-3 px-4 border-2 border-sage-green rounded-xl hover:bg-light-green transition-all duration-300 transform hover:scale-105" id="mobileSignupBtn">
+                                <i class="fas fa-mobile-alt mr-2 text-sage-green"></i>
+                                <span class="font-medium">Mobile</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="signupInputs" class="space-y-4 mb-6">
+                        <!-- Signup inputs will be populated here -->
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-gradient-to-r from-forest-green to-nature-green text-white py-4 rounded-xl hover:from-nature-green hover:to-emerald transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-lg">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Sign Up
+                    </button>
+                </form>
+
+                <div class="text-center mt-8">
+                    <p class="text-gray-600">Already have an account? 
+                        <a href="login.html" class="text-vibrant-green hover:text-emerald font-semibold transition-colors">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Modal -->
+    <div id="otpModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-sage-green to-vibrant-green rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-key text-white text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-forest-green">Enter OTP</h2>
+                <p class="text-gray-600 mt-2">We've sent a code to your <span id="otpDestination"></span></p>
+            </div>
+            
+            <form id="otpForm">
+                <div class="mb-6">
+                    <input type="text" id="otpInput" class="w-full px-4 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-vibrant-green text-center text-2xl font-bold tracking-widest" placeholder="000000" maxlength="6">
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-forest-green to-nature-green text-white py-4 rounded-xl hover:from-nature-green hover:to-emerald transition-all duration-300 shadow-lg font-semibold">
+                    <i class="fas fa-check mr-2"></i>
+                    Verify OTP
+                </button>
+                
+                <button type="button" onclick="resendOtp()" class="w-full mt-4 text-sage-green hover:text-vibrant-green transition-colors font-semibold">
+                    <i class="fas fa-redo mr-2"></i>
+                    Resend OTP
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

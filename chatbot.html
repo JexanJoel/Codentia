@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CropKind AI Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(-45deg, #c8e6c9, #81c784, #4caf50, #2d8f2d);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-gray-800 dark:text-white dark:bg-gray-900">
+
+    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white/90 dark:bg-gray-800/90 rounded-xl shadow-xl">
+        <h1 class="text-3xl font-bold text-center text-green-900 dark:text-green-300 mb-4">
+            CropKind AI Assistant 🌾
+        </h1>
+
+        <!-- Chat Display -->
+        <div id="chatMessages" class="h-96 overflow-y-auto p-4 bg-green-50 dark:bg-gray-700 rounded-lg mb-4 space-y-4">
+            <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-green-700 rounded-full flex items-center justify-center text-white text-sm">🤖
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow">
+                    Hello! I'm your AI farming assistant. Ask me anything about crops, weather, fertilizers, or schemes.
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="flex gap-2">
+            <input id="messageInput" type="text" placeholder="Ask about farming..."
+                class="flex-1 px-4 py-2 rounded-lg border border-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white" />
+            <button onclick="sendMessage()" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800">
+                ➤
+            </button>
+        </div>
+    </div>
+
+    <script src="chatbot.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Planner - CropKind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forest-green': '#1a5d1a',
+                        'leaf-green': '#2d8f2d',
+                        'sage-green': '#4caf50',
+                        'mint-green': '#81c784',
+                        'light-green': '#c8e6c9',
+                        'nature-green': '#388e3c',
+                        'vibrant-green': '#4caf50',
+                        'emerald': '#00c853',
+                    }
+                }
+            },
+            darkMode: 'class'
+        }
+    </script>
+    <style>
+        .animated-gradient {
+            background: linear-gradient(-45deg, #c8e6c9, #81c784, #4caf50, #2d8f2d);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const html = document.documentElement;
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) html.classList.add(storedTheme);
+
+            const toggleBtn = document.getElementById('themeToggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    if (html.classList.contains('dark')) {
+                        html.classList.remove('dark');
+                        localStorage.setItem('theme', '');
+                    } else {
+                        html.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        // Theme toggle logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const html = document.documentElement;
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) html.classList.add(storedTheme);
+
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                if (html.classList.contains('dark')) {
+                    html.classList.remove('dark');
+                    localStorage.setItem('theme', '');
+                } else {
+                    html.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        });
+    </script>
+
+</head>
+
+<body class="animated-gradient min-h-screen dark:bg-gray-900">
+    <!-- Header -->
+    <header
+        class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b-4 border-vibrant-green">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="dashboard.html"
+                        class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors">
+                        <i class="fas fa-arrow-left text-2xl"></i>
+                    </a>
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-forest-green to-vibrant-green rounded-full flex items-center justify-center">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <h1
+                        class="text-3xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent">
+                        Budget Planner</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="exportBudget()"
+                        class="text-forest-green dark:text-mint-green hover:text-vibrant-green transition-colors">
+                        <i class="fas fa-download text-2xl"></i>
+                    </button>
+                    <!-- Theme Toggle Button with Dropdown -->
+                    <div class="relative">
+                        <button id="themeToggle"
+                            class="bg-gradient-to-r from-sage-green to-vibrant-green text-white p-3 rounded-full hover:from-vibrant-green hover:to-emerald transition-all duration-300 shadow-lg focus:outline-none">
+                            <i id="themeIcon" class="fas fa-sun text-lg"></i>
+                        </button>
+                        <div id="themeDropdown"
+                            class="absolute right-0 mt-2 w-36 bg-white dark:bg-gray-800 rounded-lg shadow-lg hidden z-50">
+                            <button data-theme="light"
+                                class="block w-full text-left px-4 py-2 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">☀️
+                                Light</button>
+                            <button data-theme="dark"
+                                class="block w-full text-left px-4 py-2 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">🌙
+                                Dark</button>
+                            <button data-theme="system"
+                                class="block w-full text-left px-4 py-2 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">🖥️
+                                System</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Budget Overview -->
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-8">
+            <h2
+                class="text-2xl font-bold bg-gradient-to-r from-forest-green to-nature-green bg-clip-text text-transparent mb-6">
+                Budget Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-green-100 dark:bg-green-900 rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-rupee-sign text-white text-xl"></i>
+                        </div>
+                        <i class="fas fa-arrow-up text-green-500"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Expected Income</h3>
+                    <p class="text-2xl font-bold text-green-600 dark:text-green-300" id="expectedIncome">₹50,000</p>
+                </div>
+                <div class="bg-red-100 dark:bg-red-900 rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-arrow-down text-white text-xl"></i>
+                        </div>
+                        <i class="fas fa-arrow-down text-red-500"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Total Expenses</h3>
+                    <p class="text-2xl font-bold text-red-600 dark:text-red-300" id="totalExpenses">₹35,000</p>
+                </div>
+                <div class="bg-blue-100 dark:bg-blue-900 rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <i class="fas fa-arrow-up text-blue-500"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Net Profit</h3>
+                    <p class="text-2xl font-bold text-blue-600 dark:text-blue-300" id="netProfit">₹15,000</p>
+                </div>
+                <div class="bg-purple-100 dark:bg-purple-900 rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-percentage text-white text-xl"></i>
+                        </div>
+                        <i class="fas fa-chart-bar text-purple-500"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Profit Margin</h3>
+                    <p class="text-2xl font-bold text-purple-600 dark:text-purple-300" id="profitMargin">30%</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Expense Form -->
+        <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow-2xl p-8 mb-8">
+            <h3 class="text-xl font-bold text-forest-green dark:text-mint-green mb-6">Add Expense</h3>
+            <form id="expenseForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Category</label>
+                    <select id="expenseCategory"
+                        class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white">
+                        <option value="">Select category</option>
+                        <option value="seeds">Seeds</option>
+                        <option value="fertilizer">Fertilizer</option>
+                        <option value="pesticide">Pesticide</option>
+                        <option value="labor">Labor</option>
+                        <option value="equipment">Equipment</option>
+                        <option value="irrigation">Irrigation</option>
+                        <option value="transport">Transport</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Description</label>
+                    <input type="text" id="expenseDescription"
+                        class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white"
+                        placeholder="Enter description">
+                </div>
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 mb-2">Amount (₹)</label>
+                    <input type="number" id="expenseAmount"
+                        class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:border-vibrant-green dark:bg-gray-700 dark:text-white"
+                        placeholder="Enter amount">
+                </div>
+                <div class="flex items-end">
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-forest-green to-nature-green text-white py-3 rounded-xl hover:from-nature-green hover:to-emerald transition-all duration-300 shadow-lg">
+                        <i class="fas fa-plus mr-2"></i>Add Expense
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Add Expense Form -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h3 class="text-xl font-bold text-forest-green mb-6">Add Expense</h3>
+        
+            <form id="expenseForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">Category</label>
+                    <select id="expenseCategory"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-forest-green">
+                        <option value="">Select category</option>
+                        <option value="seeds">Seeds</option>
+                        <option value="fertilizer">Fertilizer</option>
+                        <option value="pesticide">Pesticide</option>
+                        <option value="labor">Labor</option>
+                        <option value="equipment">Equipment</option>
+                        <option value="irrigation">Irrigation</option>
+                        <option value="transport">Transport</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+        
+                <div>
+                    <label class="block text-gray-700 mb-2">Description</label>
+                    <input type="text" id="expenseDescription"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-forest-green"
+                        placeholder="Enter description">
+                </div>
+        
+                <div>
+                    <label class="block text-gray-700 mb-2">Amount (₹)</label>
+                    <input type="number" id="expenseAmount"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-forest-green"
+                        placeholder="Enter amount">
+                </div>
+        
+                <div class="flex items-end">
+                    <button type="submit"
+                        class="w-full bg-forest-green text-white py-3 rounded-lg hover:bg-leaf-green transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Add Expense
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Expense List -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h3 class="text-xl font-bold text-forest-green mb-6">Expense List</h3>
+        
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-light-green">
+                            <th class="text-left p-4 font-semibold text-forest-green">Category</th>
+                            <th class="text-left p-4 font-semibold text-forest-green">Description</th>
+                            <th class="text-left p-4 font-semibold text-forest-green">Amount</th>
+                            <th class="text-left p-4 font-semibold text-forest-green">Date</th>
+                            <th class="text-left p-4 font-semibold text-forest-green">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expenseTableBody">
+                        <!-- Expenses will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Income Planning -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h3 class="text-xl font-bold text-forest-green mb-6">Expected Income</h3>
+        
+            <form id="incomeForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">Crop</label>
+                    <input type="text" id="incomeCrop"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-forest-green"
+                        placeholder="Enter crop name">
+                </div>
+        
+                <div>
+                    <label class="block text-gray-700 mb-2">Quantity (kg)</label>
+                    <input type="number" id="incomeQuantity"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-forest-green"
+                        placeholder="Enter quantity">
+                </div>
+        
+                <div>
+                    <label class="block text-gray-700 mb-2">Price per kg (₹)</label>
+                    <input type="number" id="incomePrice"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-forest-green"
+                        placeholder="Enter price">
+                </div>
+        
+                <div class="flex items-end">
+                    <button type="submit"
+                        class="w-full bg-sage-green text-white py-3 rounded-lg hover:bg-leaf-green transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Add Income
+                    </button>
+                </div>
+            </form>
+        
+            <div id="incomeList" class="mt-6 space-y-4">
+                <!-- Income items will be populated here -->
+            </div>
+        </div>
+    </div>
+    <script>
+        // Theme toggle dropdown and icon logic
+        const html = document.documentElement;
+        const themeIcon = document.getElementById("themeIcon");
+        const themeDropdown = document.getElementById("themeDropdown");
+        const themeToggle = document.getElementById("themeToggle");
+
+        // Show dropdown
+        themeToggle.addEventListener("click", () => {
+            themeDropdown.classList.toggle("hidden");
+        });
+
+        // Apply saved theme on load
+        const savedTheme = localStorage.getItem("theme") || "system";
+        applyTheme(savedTheme);
+
+        // Theme buttons
+        document.querySelectorAll("#themeDropdown button").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const selected = btn.getAttribute("data-theme");
+                applyTheme(selected);
+                themeDropdown.classList.add("hidden");
+            });
+        });
+
+        function applyTheme(mode) {
+            localStorage.setItem("theme", mode);
+
+            if (mode === "dark") {
+                html.classList.add("dark");
+                themeIcon.className = "fas fa-moon text-lg";
+            } else if (mode === "light") {
+                html.classList.remove("dark");
+                themeIcon.className = "fas fa-sun text-lg";
+            } else {
+                const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                html.classList.toggle("dark", isDark);
+                themeIcon.className = isDark ? "fas fa-moon text-lg" : "fas fa-sun text-lg";
+            }
+        }
+    </script>
+
+    <script src="js/budget-planner.js"></script>
+</body>
+
+</html>
